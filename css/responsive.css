@@ -1,0 +1,19 @@
+@media (min-width: 768px) {
+  .safe-zone {
+    max-width: 560px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .character-wrapper {
+    width: 320px;
+  }
+
+  .card-glass,
+  .card-glass-light,
+  .invitation-card {
+    padding: 2.5rem 2.25rem;
+  }
+}
