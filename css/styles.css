@@ -48,7 +48,7 @@ body {
 
 /* Escenas largas con escenario fijo para animar el video al hacer scroll */
 .scene-scroll-video {
-  min-height: 240svh;
+  min-height: 155svh;
   align-items: flex-start;
   padding: 0;
   overflow: visible;

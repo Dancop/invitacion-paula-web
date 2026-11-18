@@ -1,79 +1,93 @@
 function initScrollExperience() {
-  // 1. Sincronización nativa de video con el progreso del scroll
-  const scrollVideoSections = document.querySelectorAll('.scene-scroll-video');
-
-  scrollVideoSections.forEach((section) => {
-    const video = section.querySelector('.bg-video');
-    if (!video) return;
-
-    let targetTime = 0;
-    let currentTime = 0;
-    let isVideoReady = false;
-
-    // Si el MP4 aún no existe (ej. escena-03.mp4), convierte la sección a altura normal
-    const handleVideoError = () => {
-      video.style.display = 'none';
-      section.classList.remove('scene-scroll-video');
-    };
-
-    video.addEventListener('error', handleVideoError);
-    const sourceEl = video.querySelector('source');
-    if (sourceEl) {
-      sourceEl.addEventListener('error', handleVideoError);
+  // 1. Secuencias de fotogramas en <canvas> vinculadas al scroll
+  const canvasScenes = [
+    {
+      sectionId: 'escena-1',
+      canvasId: 'canvas-escena-1',
+      folder: './assets/frames/escena-01'
+    },
+    {
+      sectionId: 'escena-3',
+      canvasId: 'canvas-escena-3',
+      folder: './assets/frames/escena-03'
     }
+  ];
 
-    // Mostrar el primer cuadro apenas carguen los metadatos
-    video.addEventListener('loadedmetadata', () => {
-      isVideoReady = true;
-      try {
-        video.currentTime = 0.01;
-      } catch (e) {}
-    });
+  canvasScenes.forEach(({ sectionId, canvasId, folder }) => {
+    const section = document.getElementById(sectionId);
+    const canvas = document.getElementById(canvasId);
+    if (!section || !canvas) return;
 
-    // Desbloquear decodificador de video en móviles al primer toque o scroll
-    const unlockMobileVideo = () => {
-      video.play()
-        .then(() => {
-          video.pause();
-          isVideoReady = true;
-        })
-        .catch(() => {});
-      window.removeEventListener('touchstart', unlockMobileVideo);
-      window.removeEventListener('pointerdown', unlockMobileVideo);
+    const ctx = canvas.getContext('2d');
+    const frames = [];
+    let targetFrame = 0;
+    let currentFrame = 0;
+    let lastDrawnFrame = -1;
+
+    const getFramePath = (index) => {
+      const padded = String(index + 1).padStart(4, '0');
+      return `${folder}/frame-${padded}.webp`;
     };
-    window.addEventListener('touchstart', unlockMobileVideo, { passive: true });
-    window.addEventListener('pointerdown', unlockMobileVideo, { passive: true });
 
-    // Bucle fluido a 60fps para mapear el scroll al tiempo del video
-    function renderScrollVideo() {
-      if (video.style.display !== 'none' && (isVideoReady || video.readyState >= 1) && video.duration) {
+    const drawFrame = (index) => {
+      const img = frames[index];
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+
+      if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      lastDrawnFrame = index;
+    };
+
+    const loadNextFrame = (index) => {
+      const img = new Image();
+      img.onload = () => {
+        frames.push(img);
+        if (index === 0) drawFrame(0);
+        loadNextFrame(index + 1);
+      };
+      img.onerror = () => {
+        if (index === 0) {
+          canvas.style.display = 'none';
+          section.classList.remove('scene-scroll-video');
+        }
+      };
+      img.src = getFramePath(index);
+    };
+
+    loadNextFrame(0);
+
+    function renderCanvasSequence() {
+      const total = frames.length;
+      if (total > 1) {
         const rect = section.getBoundingClientRect();
         const scrollableDistance = section.offsetHeight - window.innerHeight;
 
         if (scrollableDistance > 0) {
-          // Progreso de 0 (inicio de la sección) a 1 (final de la sección)
           const rawProgress = -rect.top / scrollableDistance;
           const clampedProgress = Math.min(1, Math.max(0, rawProgress));
-          targetTime = clampedProgress * (video.duration - 0.04);
+          targetFrame = clampedProgress * (total - 1);
         }
 
-        // Suavizado (lerp) para evitar saltos bruscos al mover el dedo
-        currentTime += (targetTime - currentTime) * 0.16;
+        currentFrame += (targetFrame - currentFrame) * 0.42;
+        const frameIndex = Math.min(total - 1, Math.max(0, Math.round(currentFrame)));
 
-        if (Math.abs(video.currentTime - currentTime) > 0.015) {
-          try {
-            video.currentTime = currentTime;
-          } catch (e) {}
+        if (frameIndex !== lastDrawnFrame) {
+          drawFrame(frameIndex);
         }
       }
 
-      requestAnimationFrame(renderScrollVideo);
+      requestAnimationFrame(renderCanvasSequence);
     }
 
-    requestAnimationFrame(renderScrollVideo);
+    requestAnimationFrame(renderCanvasSequence);
   });
 
-  // 2. Animación suave de aparición de tarjetas al hacer scroll
+  // 2. Aparición suave de tarjetas al hacer scroll
   const revealElements = document.querySelectorAll('.reveal-up');
 
   if ('IntersectionObserver' in window) {
@@ -94,7 +108,6 @@ function initScrollExperience() {
     revealElements.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Asegurar que la portada sea visible desde el instante inicial
   setTimeout(() => {
     document.querySelectorAll('#escena-1 .reveal-up').forEach((el) => {
       el.classList.add('is-visible');
@@ -162,7 +175,7 @@ function initScrollExperience() {
           targetFrame = clampedProgress * (total - 1);
         }
 
-        currentFrame += (targetFrame - currentFrame) * 0.22;
+        currentFrame += (targetFrame - currentFrame) * 0.42;
         const frameIndex = Math.min(total - 1, Math.max(0, Math.round(currentFrame)));
 
         if (frameIndex !== lastDrawnFrame) {

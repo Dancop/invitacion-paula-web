@@ -77,18 +77,13 @@
       </div>
     </section>
 
-    <!-- ESCENA 3: Momento de relajación -->
+<!-- ESCENA 3: Momento de relajación controlado por scroll -->
     <section id="escena-3" class="scene scene-scroll-video" data-scene="3">
       <div class="sticky-stage">
-        <video
-          id="video-escena-3"
-          class="bg-video crop-bars"
-          muted
-          playsinline
-          preload="metadata"
-          poster="./assets/images/escena-03.webp">
-          <source src="./assets/videos/escena-03.mp4" type="video/mp4" />
-        </video>
+        <canvas
+          id="canvas-escena-3"
+          class="bg-canvas crop-bars"
+          aria-label="Animación acuarela de bañera y burbujas de spa"></canvas>
 
         <img
           src="./assets/images/escena-03.webp"
