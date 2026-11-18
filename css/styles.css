@@ -1,15 +1,16 @@
 :root {
   --bg-cream: #fdf8f2;
   --blush-pink: #f7d6e0;
-  --soft-pink: #eab8c8;
+  --rose-watercolor: #d86492;
+  --plum-watercolor: #9c6bb8;
   --pale-lavender: #e5d9f2;
   --lilac-accent: #9b7ebd;
-  --lilac-dark: #6d518e;
+  --lilac-dark: #684b8a;
   --sage-green: #cde0c9;
   --pastel-yellow: #fdf0c2;
-  --text-main: #5a4a58;
-  --text-soft: #7c6a79;
-  --border-pencil: rgba(138, 114, 134, 0.35);
+  --gold-sparkle: #cfa042;
+  --text-main: #534251;
+  --text-soft: #6e5c6c;
 }
 
 *, *::before, *::after {
@@ -19,22 +20,125 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
 }
 
 body {
   background-color: var(--bg-cream);
-  background-image:
-    radial-gradient(circle at 15% 15%, rgba(247, 214, 224, 0.45) 0%, transparent 45%),
-    radial-gradient(circle at 85% 35%, rgba(229, 217, 242, 0.45) 0%, transparent 45%),
-    radial-gradient(circle at 25% 75%, rgba(205, 224, 201, 0.35) 0%, transparent 45%);
   color: var(--text-main);
   font-family: 'Quicksand', sans-serif;
   overflow-x: hidden;
   line-height: 1.6;
 }
 
+body.is-loading {
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* =========================================
+   PRELOADER TEMÁTICO SPA PARTY
+   ========================================= */
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: var(--bg-cream);
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(247, 214, 224, 0.7) 0%, transparent 55%),
+    radial-gradient(circle at 80% 75%, rgba(229, 217, 242, 0.75) 0%, transparent 55%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  transition: opacity 0.65s ease, visibility 0.65s ease;
+}
+
+.preloader-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+}
+
+.preloader-icon-wrap {
+  width: 145px;
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-art {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(155, 126, 189, 0.2));
+}
+
+.preloader-fallback {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pastel-yellow) 0%, var(--blush-pink) 70%, var(--pale-lavender) 100%);
+  border: 2.5px dashed var(--lilac-accent);
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  color: var(--rose-watercolor);
+}
+
+.preloader-title {
+  font-family: 'Mali', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--lilac-dark);
+}
+
+.preloader-bar-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(229, 217, 242, 0.65);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(155, 126, 189, 0.35);
+}
+
+.preloader-bar-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e26d9b 0%, #b592d6 50%, #cde0c9 100%);
+  transition: width 0.2s ease-out;
+}
+
+.preloader-percent {
+  font-family: 'Mali', cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--rose-watercolor);
+}
+
+/* =========================================
+   ESCENAS Y CONTENEDORES
+   ========================================= */
 .scene {
   position: relative;
   width: 100%;
@@ -46,7 +150,6 @@ body {
   overflow: hidden;
 }
 
-/* Escenas largas con escenario fijo para animar el video al hacer scroll */
 .scene-scroll-video {
   min-height: 155svh;
   align-items: flex-start;
@@ -62,255 +165,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem 1.25rem;
+  padding: 1rem 1.25rem;
   overflow: hidden;
   background-color: var(--bg-cream);
 }
 
-.bg-video,
-.scene-bg-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Recorta las barras negras superior e inferior del MP4 */
-.crop-bars {
-  transform: scale(1.38);
-  transform-origin: center center;
-}
-
-.fallback-art {
-  z-index: -1;
-}
-
-/* Zona segura central */
-.safe-zone {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 440px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-}
-
-/* Distribución en portada para no tapar el rostro de Paula */
-.hero-layout {
-  height: calc(100svh - 3rem);
-  justify-content: space-between;
-  padding: 2rem 0 0.75rem;
-}
-
-.hero-top,
-.hero-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Tipografía */
-.script-title {
-  font-family: 'Sacramento', cursive;
-  font-size: clamp(3.1rem, 11vw, 4.5rem);
-  color: var(--lilac-dark);
-  line-height: 1.02;
-  text-shadow:
-    0 2px 12px rgba(253, 248, 242, 0.98),
-    0 0 22px rgba(253, 248, 242, 0.95);
-}
-
-.script-title-md {
-  font-family: 'Sacramento', cursive;
-  font-size: clamp(2.5rem, 9vw, 3.6rem);
-  color: var(--lilac-dark);
-  line-height: 1.1;
-}
-
-.section-heading {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--lilac-dark);
-}
-
-.subtitle-pill {
-  background: rgba(253, 248, 242, 0.92);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1.5px solid var(--border-pencil);
-  padding: 0.45rem 1.2rem;
-  border-radius: 999px;
-  font-size: 1.05rem;
-  color: var(--text-main);
-  box-shadow: 0 6px 16px rgba(155, 126, 189, 0.15);
-}
-
-.body-copy {
-  font-size: 1rem;
-  color: var(--text-soft);
-}
-
-.badge-pastel {
-  background: rgba(229, 217, 242, 0.92);
-  color: var(--lilac-dark);
-  border: 1.5px dashed var(--border-pencil);
-  padding: 0.35rem 1rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* Tarjetas acuarela */
-.card-glass,
-.card-glass-light,
-.invitation-card {
-  background: rgba(253, 248, 242, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 2px solid var(--border-pencil);
-  border-radius: 28px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 14px 32px rgba(155, 126, 189, 0.14);
-}
-
-.spa-pills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.spa-pills span {
-  background: var(--blush-pink);
-  color: var(--text-main);
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid var(--border-pencil);
-}
-
-/* Datos de la celebración */
-.details-grid {
-  width: 100%;
-  display: grid;
-  gap: 1rem;
-  margin: 0.75rem 0;
-}
-
-.detail-item {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1.5px solid var(--pale-lavender);
-  border-radius: 20px;
-  padding: 0.95rem 1rem;
-}
-
-.detail-label {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--lilac-accent);
-  margin-bottom: 0.2rem;
-}
-
-.detail-value {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.detail-sub {
-  font-size: 0.95rem;
-  color: var(--text-soft);
-}
-
-/* Cierre con medallón floral */
-.floral-medallion {
-  width: 215px;
-  height: 215px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--pastel-yellow) 0%, var(--blush-pink) 70%, var(--pale-lavender) 100%);
-  border: 3px dashed var(--lilac-accent);
-  padding: 12px 12px 0;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  box-shadow: 0 12px 26px rgba(155, 126, 189, 0.2);
-}
-
-.paula-cutout-closing {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Botones */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 300px;
-  padding: 0.9rem 1.5rem;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 0.98rem;
-  text-decoration: none;
-  border: 1.5px solid var(--border-pencil);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--lilac-accent), var(--lilac-dark));
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 8px 20px rgba(109, 81, 142, 0.28);
-}
-
-.btn-secondary {
-  background: var(--sage-green);
-  color: #3d5239;
-  box-shadow: 0 6px 16px rgba(132, 165, 126, 0.22);
-}
-
-/* Botón flotante de audio */
-.audio-btn {
-  position: fixed;
-  top: 0.85rem;
-  right: 0.85rem;
-  z-index: 50;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(253, 248, 242, 0.92);
-  border: 1.5px solid var(--border-pencil);
-  color: var(--lilac-dark);
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
+.stage-top {
+  align-items: flex-start;
+  padding-top: 11svh;
 }
 
 .bg-video,
@@ -324,4 +186,268 @@ body {
   object-position: center center;
   z-index: 0;
   pointer-events: none;
+}
+
+.crop-bars {
+  transform: scale(1.34);
+  transform-origin: center center;
+}
+
+.safe-zone {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Portada limpia sin saturar arriba */
+.hero-layout {
+  height: 100svh;
+  justify-content: space-between;
+  padding: 2.6rem 0 calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+.hero-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.art-title-main {
+  width: min(88vw, 355px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 3px 10px rgba(253, 248, 242, 0.95));
+}
+
+.art-title-ribbon {
+  width: min(94vw, 380px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(109, 81, 142, 0.22));
+}
+
+.scroll-hint-free {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Mali', cursive;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--lilac-dark);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 1),
+    0 0 10px rgba(253, 248, 242, 1),
+    0 0 18px rgba(253, 248, 242, 0.95);
+}
+
+.scroll-arrow {
+  display: inline-block;
+  color: var(--rose-watercolor);
+  font-weight: 700;
+}
+
+/* Títulos caligráficos con espacio inferior suficiente para j y g */
+.watercolor-title-md {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: clamp(2.45rem, 9.2vw, 3.5rem);
+  line-height: 1.34;
+  padding: 0.15em 0.4em 0.28em;
+  margin-bottom: -0.18em;
+  display: inline-block;
+  overflow: visible;
+  background: linear-gradient(135deg, #e26d9b 0%, #c668a6 52%, #8e6bbf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(0 2px 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(0 3px 8px rgba(156, 107, 184, 0.25));
+}
+
+.editorial-block {
+  padding: 1.5rem 0.75rem;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(253, 248, 242, 0.86) 0%,
+    rgba(253, 248, 242, 0.42) 58%,
+    transparent 82%
+  );
+}
+
+.heart-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58%;
+  gap: 0.55rem;
+  color: var(--gold-sparkle);
+  font-size: 0.95rem;
+}
+
+.heart-divider::before,
+.heart-divider::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(207, 160, 66, 0.65), transparent);
+}
+
+.eyebrow-hand {
+  font-family: 'Mali', cursive;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lilac-accent);
+}
+
+.heart-pink {
+  color: var(--rose-watercolor);
+}
+
+.body-copy {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--text-main);
+  max-width: 340px;
+}
+
+.hand-highlights {
+  font-family: 'Mali', cursive;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--lilac-dark);
+  margin-top: 0.25rem;
+}
+
+.event-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.event-kicker {
+  font-family: 'Mali', cursive;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lilac-accent);
+}
+
+.event-highlight {
+  font-family: 'Mali', cursive;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--rose-watercolor);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.event-sub {
+  font-family: 'Mali', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lilac-dark);
+}
+
+/* Escena 5: Fondo acuarela pastel + encuadre completo de Paula */
+.scene-closing {
+  background-color: var(--bg-cream);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(247, 214, 224, 0.72) 0%, transparent 52%),
+    radial-gradient(circle at 82% 28%, rgba(229, 217, 242, 0.78) 0%, transparent 55%),
+    radial-gradient(circle at 50% 85%, rgba(205, 224, 201, 0.55) 0%, transparent 58%),
+    radial-gradient(circle at 18% 75%, rgba(253, 240, 194, 0.65) 0%, transparent 50%);
+}
+
+.floral-medallion {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pastel-yellow) 0%, var(--blush-pink) 68%, var(--pale-lavender) 100%);
+  border: 3px dashed var(--lilac-accent);
+  padding: 12px 14px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-shadow: 0 12px 26px rgba(155, 126, 189, 0.22);
+}
+
+.paula-cutout-closing {
+  width: 82%;
+  height: auto;
+  display: block;
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 290px;
+  margin-top: 0.4rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: 'Mali', cursive;
+  font-weight: 700;
+  font-size: 0.96rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d86492, #8e6bbf);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(109, 81, 142, 0.28);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #cde0c9, #b7d3b2);
+  color: #3a4f36;
+  box-shadow: 0 6px 16px rgba(132, 165, 126, 0.24);
+}
+
+.audio-btn {
+  position: fixed;
+  top: 0.7rem;
+  right: 0.8rem;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(253, 248, 242, 0.72);
+  border: none;
+  color: var(--lilac-dark);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-family: 'Mali', cursive;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
 }

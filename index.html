@@ -8,15 +8,37 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Sacramento&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/animations.css" />
   <link rel="stylesheet" href="./css/responsive.css" />
 </head>
-<body>
+<body class="is-loading">
 
-  <!-- Control opcional de música ambiental -->
+  <!-- PRELOADER TEMÁTICO SPA PARTY -->
+  <div id="spa-preloader" class="preloader-overlay" role="status" aria-live="polite">
+    <div class="preloader-inner">
+      <div class="preloader-icon-wrap float-gentle">
+        <img
+          src="./assets/images/preloader-spa.webp"
+          alt="Preparando el Spa de Paula"
+          class="preloader-art"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <!-- Respaldo acuarela si aún no se guarda preloader-spa.webp -->
+        <div class="preloader-fallback" style="display:none;" aria-hidden="true">✿</div>
+      </div>
+
+      <p class="preloader-title">Preparando el Spa de Paula...</p>
+
+      <div class="preloader-bar-track">
+        <div id="preloader-bar-fill" class="preloader-bar-fill"></div>
+      </div>
+      <span id="preloader-percent" class="preloader-percent">0%</span>
+    </div>
+  </div>
+
+  <!-- Control discreto de música ambiental -->
   <button id="audio-toggle" class="audio-btn" type="button" aria-label="Activar o desactivar música" aria-pressed="false">
     <span class="audio-icon" aria-hidden="true">♪</span>
     <span class="audio-label">Música: Off</span>
@@ -25,12 +47,9 @@
     <source src="./assets/audio/musica-spa.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Capa global de burbujas flotantes -->
-  <div class="bubbles-layer" aria-hidden="true"></div>
-
   <main id="invitacion">
 
-    <!-- ESCENA 1: Secuencia de fotogramas de Paula controlada por scroll -->
+    <!-- ESCENA 1: Paula animada por scroll + títulos limpios sin saturar -->
     <section id="escena-1" class="scene scene-scroll-video" data-scene="1">
       <div class="sticky-stage">
         <canvas
@@ -40,22 +59,29 @@
 
         <div class="safe-zone hero-layout">
           <header class="hero-top reveal-up">
-            <span class="badge-pastel">¡Estás invitado!</span>
-            <h1 class="script-title">Paula's Spa Party</h1>
+            <h1 class="sr-only">Paula's Spa Party</h1>
+            <img
+              src="./assets/images/titulo-paula.webp"
+              alt="Paula's Spa Party"
+              class="art-title-main float-gentle" />
           </header>
 
           <footer class="hero-bottom reveal-up">
-            <p class="subtitle-pill">Acompáñame a celebrar mis <strong>11 años</strong></p>
-            <div class="scroll-hint" aria-hidden="true">
+            <img
+              src="./assets/images/titulo-11-anos.webp"
+              alt="Acompáñame a celebrar mis 11 años"
+              class="art-title-ribbon" />
+
+            <div class="scroll-hint-free" aria-hidden="true">
               <span>Desliza para animar</span>
-              <div class="scroll-dot"></div>
+              <span class="scroll-arrow">↓</span>
             </div>
           </footer>
         </div>
       </div>
     </section>
 
-    <!-- ESCENA 2: El universo spa (sin personaje) -->
+    <!-- ESCENA 2: El universo spa -->
     <section id="escena-2" class="scene scene-universe" data-scene="2">
       <img
         src="./assets/images/escena-02.webp"
@@ -63,36 +89,30 @@
         class="scene-bg-art ken-burns"
         loading="lazy" />
 
-      <div class="safe-zone card-glass reveal-up">
-        <span class="motif-divider">✿ ❀ ✿</span>
-        <h2 class="section-heading">Una tarde de mimos y relajación</h2>
+      <div class="safe-zone editorial-block reveal-up">
+        <p class="eyebrow-hand">✦ Un día especial ✦</p>
+        <h2 class="watercolor-title-md">Mimos y relajación</h2>
+        <div class="heart-divider"><span>♡</span></div>
         <p class="body-copy">
           Preparamos batas suaves, mascarillas refrescantes, aromas de lavanda y muchas sorpresas para compartir juntas.
         </p>
-        <div class="spa-pills">
-          <span class="pill-float">Batas &amp; Tiara Spa</span>
-          <span class="pill-float">Mascarillas</span>
-          <span class="pill-float">Merienda &amp; Juegos</span>
-        </div>
+        <p class="hand-highlights">
+          Batas &amp; Tiara Spa <span class="heart-pink">♥</span> Mascarillas <span class="heart-pink">♥</span> Merienda &amp; Juegos
+        </p>
       </div>
     </section>
 
-<!-- ESCENA 3: Momento de relajación controlado por scroll -->
+    <!-- ESCENA 3: Momento de relajación controlado por scroll -->
     <section id="escena-3" class="scene scene-scroll-video" data-scene="3">
-      <div class="sticky-stage">
+      <div class="sticky-stage stage-top">
         <canvas
           id="canvas-escena-3"
-          class="bg-canvas crop-bars"
+          class="bg-canvas"
           aria-label="Animación acuarela de bañera y burbujas de spa"></canvas>
 
-        <img
-          src="./assets/images/escena-03.webp"
-          alt=""
-          class="scene-bg-art fallback-art ken-burns-alt"
-          loading="lazy" />
-
-        <div class="safe-zone card-glass-light reveal-up">
-          <h2 class="section-heading">Burbujas, flores y alegría</h2>
+        <div class="safe-zone editorial-block reveal-up">
+          <h2 class="watercolor-title-md">Burbujas, flores y alegría</h2>
+          <div class="heart-divider"><span>♡</span></div>
           <p class="body-copy">
             Solo tienes que traer tus ganas de divertirte y disfrutar una tarde inolvidable.
           </p>
@@ -108,22 +128,23 @@
         class="scene-bg-art ken-burns"
         loading="lazy" />
 
-      <div class="safe-zone invitation-card reveal-up">
-        <p class="eyebrow">Te espero para festejar</p>
-        <h2 class="script-title-md">Paula — 11 años</h2>
+      <div class="safe-zone editorial-block reveal-up">
+        <p class="eyebrow-hand">✦ Te espero para festejar ✦</p>
+        <h2 class="watercolor-title-md">Paula — 11 años</h2>
+        <div class="heart-divider"><span>♡</span></div>
 
-        <div class="details-grid">
-          <div class="detail-item">
-            <span class="detail-label">Cuándo</span>
-            <p class="detail-value">Viernes 20 de noviembre</p>
-            <p class="detail-sub">4:00 p. m.</p>
-          </div>
+        <div class="event-line">
+          <span class="event-kicker">Cuándo</span>
+          <p class="event-highlight">Viernes 20 de Noviembre</p>
+          <p class="event-sub">4:00 p. m.</p>
+        </div>
 
-          <div class="detail-item">
-            <span class="detail-label">Dónde</span>
-            <p class="detail-value">Memima Play Café</p>
-            <p class="detail-sub">Equipetrol, Calle Tucumán #11</p>
-          </div>
+        <div class="heart-divider"><span>♡</span></div>
+
+        <div class="event-line">
+          <span class="event-kicker">Dónde</span>
+          <p class="event-highlight">Memima Play Café</p>
+          <p class="event-sub">Equipetrol, Calle Tucumán #11</p>
         </div>
 
         <a
@@ -136,8 +157,10 @@
       </div>
     </section>
 
-    <!-- ESCENA 5: Cierre cálido con Paula y RSVP -->
+    <!-- ESCENA 5: Cierre cálido con burbujas locales y Paula completa -->
     <section id="escena-5" class="scene scene-closing" data-scene="5">
+      <div class="bubbles-layer" aria-hidden="true"></div>
+
       <div class="safe-zone closing-content reveal-up">
         <div class="floral-medallion">
           <img
@@ -147,7 +170,8 @@
             loading="lazy" />
         </div>
 
-        <h2 class="script-title-md">¡No faltes!</h2>
+        <h2 class="watercolor-title-md">¡No faltes!</h2>
+        <div class="heart-divider"><span>♡</span></div>
         <p class="body-copy">
           Por favor confirma tu asistencia por WhatsApp para tener lista tu bata de spa.
         </p>
