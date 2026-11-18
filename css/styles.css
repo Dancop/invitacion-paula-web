@@ -35,7 +35,6 @@ body {
   line-height: 1.6;
 }
 
-/* Estructura de escenas */
 .scene {
   position: relative;
   width: 100%;
@@ -47,11 +46,12 @@ body {
   overflow: hidden;
 }
 
-/* Escenas largas para controlar video con el scroll */
+/* Escenas largas con escenario fijo para animar el video al hacer scroll */
 .scene-scroll-video {
-  min-height: 220svh;
+  min-height: 240svh;
   align-items: flex-start;
   padding: 0;
+  overflow: visible;
 }
 
 .sticky-stage {
@@ -64,6 +64,7 @@ body {
   justify-content: center;
   padding: 1.5rem 1.25rem;
   overflow: hidden;
+  background-color: var(--bg-cream);
 }
 
 .bg-video,
@@ -73,15 +74,22 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   z-index: 0;
   pointer-events: none;
+}
+
+/* Recorta las barras negras superior e inferior del MP4 */
+.crop-bars {
+  transform: scale(1.38);
+  transform-origin: center center;
 }
 
 .fallback-art {
   z-index: -1;
 }
 
-/* Zona segura central para recortes verticales */
+/* Zona segura central */
 .safe-zone {
   position: relative;
   z-index: 2;
@@ -94,13 +102,30 @@ body {
   gap: 0.9rem;
 }
 
+/* Distribución en portada para no tapar el rostro de Paula */
+.hero-layout {
+  height: calc(100svh - 3rem);
+  justify-content: space-between;
+  padding: 2rem 0 0.75rem;
+}
+
+.hero-top,
+.hero-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* Tipografía */
 .script-title {
   font-family: 'Sacramento', cursive;
-  font-size: clamp(3rem, 11vw, 4.4rem);
+  font-size: clamp(3.1rem, 11vw, 4.5rem);
   color: var(--lilac-dark);
-  line-height: 1.05;
-  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.85);
+  line-height: 1.02;
+  text-shadow:
+    0 2px 12px rgba(253, 248, 242, 0.98),
+    0 0 22px rgba(253, 248, 242, 0.95);
 }
 
 .script-title-md {
@@ -116,9 +141,16 @@ body {
   color: var(--lilac-dark);
 }
 
-.subtitle {
-  font-size: 1.1rem;
+.subtitle-pill {
+  background: rgba(253, 248, 242, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1.5px solid var(--border-pencil);
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  font-size: 1.05rem;
   color: var(--text-main);
+  box-shadow: 0 6px 16px rgba(155, 126, 189, 0.15);
 }
 
 .body-copy {
@@ -127,28 +159,15 @@ body {
 }
 
 .badge-pastel {
-  background: var(--pale-lavender);
+  background: rgba(229, 217, 242, 0.92);
   color: var(--lilac-dark);
   border: 1.5px dashed var(--border-pencil);
   padding: 0.35rem 1rem;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-/* Personaje recortado */
-.character-wrapper {
-  width: min(74vw, 290px);
-  margin: 0.25rem auto;
-}
-
-.paula-cutout {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 12px 20px rgba(155, 126, 189, 0.22));
 }
 
 /* Tarjetas acuarela */
@@ -191,7 +210,7 @@ body {
 }
 
 .detail-item {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.78);
   border: 1.5px solid var(--pale-lavender);
   border-radius: 20px;
   padding: 0.95rem 1rem;
@@ -220,8 +239,8 @@ body {
 
 /* Cierre con medallón floral */
 .floral-medallion {
-  width: 210px;
-  height: 210px;
+  width: 215px;
+  height: 215px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--pastel-yellow) 0%, var(--blush-pink) 70%, var(--pale-lavender) 100%);
   border: 3px dashed var(--lilac-accent);
@@ -276,13 +295,13 @@ body {
 /* Botón flotante de audio */
 .audio-btn {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
+  top: 0.85rem;
+  right: 0.85rem;
   z-index: 50;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(253, 248, 242, 0.9);
+  background: rgba(253, 248, 242, 0.92);
   border: 1.5px solid var(--border-pencil);
   color: var(--lilac-dark);
   padding: 0.45rem 0.9rem;
@@ -292,4 +311,17 @@ body {
   font-weight: 700;
   cursor: pointer;
   backdrop-filter: blur(6px);
+}
+
+.bg-video,
+.bg-canvas,
+.scene-bg-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  pointer-events: none;
 }

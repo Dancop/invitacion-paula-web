@@ -7,6 +7,41 @@
   }
 }
 
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.07) translate(-1%, -1.5%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+@keyframes kenBurnsAlt {
+  0% {
+    transform: scale(1.06) translate(1%, 0);
+  }
+  50% {
+    transform: scale(1) translate(-1%, 1.5%);
+  }
+  100% {
+    transform: scale(1.06) translate(1%, 0);
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(109, 81, 142, 0.28);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 12px 26px rgba(109, 81, 142, 0.42);
+  }
+}
+
 @keyframes bubbleRise {
   0% {
     transform: translateY(0) scale(0.9);
@@ -27,7 +62,7 @@
 @keyframes pulseScroll {
   0%, 100% {
     transform: translateY(0);
-    opacity: 0.85;
+    opacity: 0.9;
   }
   50% {
     transform: translateY(6px);
@@ -36,13 +71,49 @@
 }
 
 .float-gentle {
-  animation: gentleFloat 4.2s ease-in-out infinite;
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+.ken-burns {
+  animation: kenBurnsSlow 18s ease-in-out infinite;
+}
+
+.ken-burns-alt {
+  animation: kenBurnsAlt 20s ease-in-out infinite;
+}
+
+.btn-pulse {
+  animation: softPulse 2.8s ease-in-out infinite;
+}
+
+.pill-float:nth-child(1) {
+  animation: gentleFloat 3.6s ease-in-out infinite;
+}
+.pill-float:nth-child(2) {
+  animation: gentleFloat 4.2s ease-in-out 0.4s infinite;
+}
+.pill-float:nth-child(3) {
+  animation: gentleFloat 3.9s ease-in-out 0.8s infinite;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .scroll-hint {
   margin-top: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--lilac-dark);
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
   align-items: center;

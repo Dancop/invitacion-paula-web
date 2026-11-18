@@ -6,12 +6,10 @@
   <title>Paula's Spa Party — Mis 11 años</title>
   <meta name="description" content="Acompáñame a celebrar mis 11 años en una tarde de Spa Party. Viernes 20 de noviembre, 4:00 p. m." />
 
-  <!-- Tipografías legibles acorde a la estética pastel -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Sacramento&display=swap" rel="stylesheet" />
 
-  <!-- Hojas de estilo modulares -->
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/animations.css" />
   <link rel="stylesheet" href="./css/responsive.css" />
@@ -27,43 +25,32 @@
     <source src="./assets/audio/musica-spa.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Contenedor global de burbujas decorativas -->
+  <!-- Capa global de burbujas flotantes -->
   <div class="bubbles-layer" aria-hidden="true"></div>
 
   <main id="invitacion">
 
-    <!-- ESCENA 1: Presentación de Paula -->
+    <!-- ESCENA 1: Secuencia de fotogramas de Paula controlada por scroll -->
     <section id="escena-1" class="scene scene-scroll-video" data-scene="1">
       <div class="sticky-stage">
-        <!-- Video opcional controlado por scroll (si existe en assets/videos/) -->
-        <video
-          id="video-escena-1"
-          class="bg-video"
-          muted
-          playsinline
-          preload="auto"
-          poster="./assets/images/escena-01-poster.webp"
-          onerror="this.style.display='none'">
-          <source src="./assets/videos/escena-01.mp4" type="video/mp4" />
-        </video>
+        <canvas
+          id="canvas-escena-1"
+          class="bg-canvas crop-bars"
+          aria-label="Animación acuarela de Paula en su Spa Party"></canvas>
 
-        <div class="safe-zone hero-content">
-          <span class="badge-pastel">¡Estás invitado!</span>
-          <h1 class="script-title">Paula's Spa Party</h1>
-          <p class="subtitle">Acompáñame a celebrar mis <strong>11 años</strong></p>
+        <div class="safe-zone hero-layout">
+          <header class="hero-top reveal-up">
+            <span class="badge-pastel">¡Estás invitado!</span>
+            <h1 class="script-title">Paula's Spa Party</h1>
+          </header>
 
-          <!-- Ilustración maestra recortada con fondo transparente 
-          <div class="character-wrapper float-gentle">
-            <img
-              src="./assets/characters/paula-maestra.webp"
-              alt="Ilustración acuarela de Paula con bata rosa y rodaja de pepino"
-              class="paula-cutout" />
-          </div>-->
-
-          <div class="scroll-hint" aria-hidden="true">
-            <span>Desliza suavemente</span>
-            <div class="scroll-dot"></div>
-          </div>
+          <footer class="hero-bottom reveal-up">
+            <p class="subtitle-pill">Acompáñame a celebrar mis <strong>11 años</strong></p>
+            <div class="scroll-hint" aria-hidden="true">
+              <span>Desliza para animar</span>
+              <div class="scroll-dot"></div>
+            </div>
+          </footer>
         </div>
       </div>
     </section>
@@ -73,9 +60,8 @@
       <img
         src="./assets/images/escena-02.webp"
         alt=""
-        class="scene-bg-art"
-        loading="lazy"
-        onerror="this.style.display='none'" />
+        class="scene-bg-art ken-burns"
+        loading="lazy" />
 
       <div class="safe-zone card-glass reveal-up">
         <span class="motif-divider">✿ ❀ ✿</span>
@@ -84,34 +70,31 @@
           Preparamos batas suaves, mascarillas refrescantes, aromas de lavanda y muchas sorpresas para compartir juntas.
         </p>
         <div class="spa-pills">
-          <span>Batas &amp; Tiara Spa</span>
-          <span>Mascarillas</span>
-          <span>Merienda &amp; Juegos</span>
+          <span class="pill-float">Batas &amp; Tiara Spa</span>
+          <span class="pill-float">Mascarillas</span>
+          <span class="pill-float">Merienda &amp; Juegos</span>
         </div>
       </div>
     </section>
 
-    <!-- ESCENA 3: Momento de relajación (Video controlado por scroll) -->
+    <!-- ESCENA 3: Momento de relajación -->
     <section id="escena-3" class="scene scene-scroll-video" data-scene="3">
       <div class="sticky-stage">
         <video
           id="video-escena-3"
-          class="bg-video"
+          class="bg-video crop-bars"
           muted
           playsinline
           preload="metadata"
-          poster="./assets/images/escena-03.webp"
-          onerror="this.style.display='none'">
+          poster="./assets/images/escena-03.webp">
           <source src="./assets/videos/escena-03.mp4" type="video/mp4" />
         </video>
 
-        <!-- Respaldo visual si aún no se carga el video -->
         <img
           src="./assets/images/escena-03.webp"
           alt=""
-          class="scene-bg-art fallback-art"
-          loading="lazy"
-          onerror="this.style.display='none'" />
+          class="scene-bg-art fallback-art ken-burns-alt"
+          loading="lazy" />
 
         <div class="safe-zone card-glass-light reveal-up">
           <h2 class="section-heading">Burbujas, flores y alegría</h2>
@@ -122,14 +105,13 @@
       </div>
     </section>
 
-    <!-- ESCENA 4: La celebración (Datos reales en HTML/CSS) -->
+    <!-- ESCENA 4: La celebración (Datos del evento) -->
     <section id="escena-4" class="scene scene-details" data-scene="4">
       <img
         src="./assets/images/escena-04.webp"
         alt=""
-        class="scene-bg-art"
-        loading="lazy"
-        onerror="this.style.display='none'" />
+        class="scene-bg-art ken-burns"
+        loading="lazy" />
 
       <div class="safe-zone invitation-card reveal-up">
         <p class="eyebrow">Te espero para festejar</p>
@@ -179,7 +161,7 @@
           href="https://wa.me/59167598274?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20al%20Spa%20Party%20de%20Paula%20el%20viernes%2020%20de%20noviembre."
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-primary">
+          class="btn btn-primary btn-pulse">
           Confirmar por WhatsApp
         </a>
       </div>
@@ -187,11 +169,6 @@
 
   </main>
 
-  <!-- GSAP y ScrollTrigger para sincronización fluida con el scroll -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-  <!-- Scripts modulares -->
   <script src="./js/audio.js"></script>
   <script src="./js/animations.js"></script>
   <script src="./js/scroll.js"></script>
