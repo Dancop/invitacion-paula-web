@@ -31,17 +31,61 @@
 
       <p class="preloader-title">Preparando el Spa de Paula...</p>
 
-      <div class="preloader-bar-track">
+      <div class="preloader-bar-track" id="preloader-track">
         <div id="preloader-bar-fill" class="preloader-bar-fill"></div>
       </div>
       <span id="preloader-percent" class="preloader-percent">0%</span>
+
+      <button id="enter-invite-btn" class="btn btn-primary preloader-enter-btn" type="button" style="display: none;">
+        Abrir invitación ✦
+      </button>
     </div>
   </div>
 
   <!-- Control discreto de música ambiental -->
-  <button id="audio-toggle" class="audio-btn" type="button" aria-label="Activar o desactivar música" aria-pressed="false">
-    <span class="audio-icon" aria-hidden="true">♪</span>
-    <span class="audio-label">Música: Off</span>
+<!-- Control flotante kawaii de música (disco acuarela + burbujas + ondas) -->
+  <button
+    id="audio-toggle"
+    class="audio-disc-btn"
+    type="button"
+    aria-label="Reproducir o pausar música"
+    aria-pressed="false"
+    title="Música ambiental">
+
+    <!-- Ondas suaves hacia la izquierda -->
+    <span class="sound-waves" aria-hidden="true">
+      <span class="wave wave-1"></span>
+      <span class="wave wave-2"></span>
+      <span class="wave wave-3"></span>
+    </span>
+
+    <!-- Pequeñas burbujas que flotan al reproducir y se detienen al pausar -->
+    <span class="disc-bubbles" aria-hidden="true">
+      <span class="mini-bubble b1"></span>
+      <span class="mini-bubble b2"></span>
+      <span class="mini-bubble b3"></span>
+      <span class="mini-bubble b4"></span>
+    </span>
+
+    <!-- Destellos brillantes -->
+    <span class="disc-sparkle s1" aria-hidden="true">✦</span>
+    <span class="disc-sparkle s2" aria-hidden="true">✦</span>
+
+    <!-- Disco musical pastel giratorio -->
+    <span class="vinyl-disc" aria-hidden="true">
+      <span class="vinyl-sheen"></span>
+    </span>
+
+<!-- Centro fijo con símbolo Play (inicial/pausado) y Pausa (reproduciendo) -->
+    <span class="disc-center" aria-hidden="true">
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="8 5 19 12 8 19 8 5"></polygon>
+      </svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="6" y="5" width="4" height="14" rx="1.8"></rect>
+        <rect x="14" y="5" width="4" height="14" rx="1.8"></rect>
+      </svg>
+    </span>
   </button>
   <audio id="bg-music" loop preload="none">
     <source src="./assets/audio/musica-spa.mp3" type="audio/mpeg" />
@@ -81,7 +125,7 @@
       </div>
     </section>
 
-    <!-- ESCENA 2: El universo spa -->
+<!-- ESCENA 2: Lo que incluye el Spa Party (según Paquete #1) -->
     <section id="escena-2" class="scene scene-universe" data-scene="2">
       <img
         src="./assets/images/escena-02.webp"
@@ -90,19 +134,19 @@
         loading="lazy" />
 
       <div class="safe-zone editorial-block reveal-up">
-        <p class="eyebrow-hand">✦ Un día especial ✦</p>
-        <h2 class="watercolor-title-md">Mimos y relajación</h2>
+        <p class="eyebrow-hand">✦ Una tarde pensada para ti ✦</p>
+        <h2 class="watercolor-title-md">Mimos y diversión</h2>
         <div class="heart-divider"><span>♡</span></div>
         <p class="body-copy">
-          Preparamos batas suaves, mascarillas refrescantes, aromas de lavanda y muchas sorpresas para compartir juntas.
+          Tendremos vestimenta spa, mascarillas faciales, exfoliación y pintado de manos, maquillaje suave y peinado a elección.
         </p>
         <p class="hand-highlights">
-          Batas &amp; Tiara Spa <span class="heart-pink">♥</span> Mascarillas <span class="heart-pink">♥</span> Merienda &amp; Juegos
+          Vestimenta Spa <span class="heart-pink">♥</span> Mascarillas &amp; Uñas <span class="heart-pink">♥</span> Peinado &amp; Maquillaje
         </p>
       </div>
     </section>
 
-    <!-- ESCENA 3: Momento de relajación controlado por scroll -->
+  <!-- ESCENA 3: Picnic, fotos y merienda (bañera animada abajo) -->
     <section id="escena-3" class="scene scene-scroll-video" data-scene="3">
       <div class="sticky-stage stage-top">
         <canvas
@@ -111,10 +155,13 @@
           aria-label="Animación acuarela de bañera y burbujas de spa"></canvas>
 
         <div class="safe-zone editorial-block reveal-up">
-          <h2 class="watercolor-title-md">Burbujas, flores y alegría</h2>
+          <h2 class="watercolor-title-md">Picnic, fotos y alegría</h2>
           <div class="heart-divider"><span>♡</span></div>
           <p class="body-copy">
-            Solo tienes que traer tus ganas de divertirte y disfrutar una tarde inolvidable.
+            Disfrutaremos un hermoso picnic con escenario personalizado para fotos y una deliciosa merienda para compartir juntas.
+          </p>
+          <p class="hand-highlights">
+            Picnic &amp; Fotos <span class="heart-pink">♥</span> Ambientación Spa <span class="heart-pink">♥</span> Deliciosa Merienda
           </p>
         </div>
       </div>
@@ -130,7 +177,7 @@
 
       <div class="safe-zone editorial-block reveal-up">
         <p class="eyebrow-hand">✦ Te espero para festejar ✦</p>
-        <h2 class="watercolor-title-md">Paula — 11 años</h2>
+        <h2 class="watercolor-title-md">Paulita Rengel — 11 años</h2>
         <div class="heart-divider"><span>♡</span></div>
 
         <div class="event-line">
@@ -149,10 +196,11 @@
 
         <a
           href="https://maps.app.goo.gl/53ENjyG4qgTZaqiX9"
+          onclick="if(/Android/i.test(navigator.userAgent)){window.location.href='geo:0,0?q=Memima+Play+Cafe+Equipetrol+Calle+Tucuman+11+Santa+Cruz';return false;}"
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-secondary">
-          Ver ubicación en Google Maps
+          Cómo llegar
         </a>
       </div>
     </section>
@@ -184,6 +232,21 @@
           Confirmar por WhatsApp
         </a>
       </div>
+<!-- Firma d4p-Tech -->
+      <footer class="brand-signature reveal-up">
+        <p class="signature-dedication">Celebrando los 11 años de Paula • 2026</p>
+        <a
+          href="https://wa.me/59172151462?text=Hola%2C%20vi%20la%20invitaci%C3%B3n%20de%20Paula%20y%20me%20encant%C3%B3.%20Quisiera%20informaci%C3%B3n%20para%20obtener%20una%20similar."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="signature-link">
+          <svg class="signature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>d4p-Tech | Invitaciones Digitales</span>
+        </a>
+      </footer>
     </section>
 
   </main>

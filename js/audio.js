@@ -1,24 +1,30 @@
 function initAudioControl() {
   const toggleBtn = document.getElementById('audio-toggle');
-  const audio = document.getElementById('bg-music');
-  const label = toggleBtn ? toggleBtn.querySelector('.audio-label') : null;
+  const bgMusic = document.getElementById('bg-music');
+  if (!toggleBtn || !bgMusic) return;
 
-  if (!toggleBtn || !audio) return;
+  bgMusic.volume = 0.45;
+
+  const setPlayingState = (playing) => {
+    toggleBtn.classList.toggle('is-playing', playing);
+    toggleBtn.setAttribute('aria-pressed', String(playing));
+    toggleBtn.setAttribute(
+      'aria-label',
+      playing ? 'Pausar música ambiental' : 'Reproducir música ambiental'
+    );
+  };
 
   toggleBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play()
-        .then(() => {
-          toggleBtn.setAttribute('aria-pressed', 'true');
-          if (label) label.textContent = 'Música: On';
-        })
-        .catch(() => {
-          if (label) label.textContent = 'Sin pista';
-        });
+    if (bgMusic.paused) {
+      bgMusic.play()
+        .then(() => setPlayingState(true))
+        .catch(() => setPlayingState(false));
     } else {
-      audio.pause();
-      toggleBtn.setAttribute('aria-pressed', 'false');
-      if (label) label.textContent = 'Música: Off';
+      bgMusic.pause();
+      setPlayingState(false);
     }
   });
+
+  bgMusic.addEventListener('pause', () => setPlayingState(false));
+  bgMusic.addEventListener('play', () => setPlayingState(true));
 }
