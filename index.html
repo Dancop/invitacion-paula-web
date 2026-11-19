@@ -167,7 +167,7 @@
       </div>
     </section>
 
-    <!-- ESCENA 4: La celebración (Datos del evento) -->
+<!-- ESCENA 4: La celebración (Entrada escalonada + aparición al desplazarse) -->
     <section id="escena-4" class="scene scene-details" data-scene="4">
       <img
         src="./assets/images/escena-04.webp"
@@ -175,32 +175,52 @@
         class="scene-bg-art ken-burns"
         loading="lazy" />
 
-      <div class="safe-zone editorial-block reveal-up">
-        <p class="eyebrow-hand">✦ Te espero para festejar ✦</p>
-        <h2 class="watercolor-title-md">Paulita Rengel — 11 años</h2>
-        <div class="heart-divider"><span>♡</span></div>
+      <div class="safe-zone editorial-block details-sequence">
+        <!-- 1. Aparece primero -->
+        <p class="eyebrow-hand reveal-up stagger-1">✦ Te espero para festejar ✦</p>
 
-        <div class="event-line">
+        <!-- 2. Entra suavemente con brillo y destellos alrededor -->
+        <div class="name-sparkle-wrap reveal-up stagger-2">
+          <span class="name-sparkle sp-1" aria-hidden="true">✦</span>
+          <span class="name-sparkle sp-2" aria-hidden="true">✧</span>
+          <span class="name-sparkle sp-3" aria-hidden="true">✦</span>
+          <span class="name-sparkle sp-4" aria-hidden="true">✧</span>
+          <h2 class="watercolor-title-name">Paulita Rengel</h2>
+        </div>
+
+        <!-- 3. Aparece debajo con un ligero retraso -->
+        <p class="age-subtitle reveal-up stagger-3">♡ ¡Mis 11 años! ♡</p>
+
+        <div class="heart-divider reveal-up stagger-3"><span>♡</span></div>
+
+        <!-- 4. Fecha aparece progresivamente al desplazarse -->
+        <div class="event-line reveal-up">
           <span class="event-kicker">Cuándo</span>
           <p class="event-highlight">Viernes 20 de Noviembre</p>
           <p class="event-sub">4:00 p. m.</p>
         </div>
 
-        <div class="heart-divider"><span>♡</span></div>
+        <div class="heart-divider reveal-up"><span>♡</span></div>
 
-        <div class="event-line">
+        <!-- 5. Ubicación aparece progresivamente al desplazarse -->
+        <div class="event-line reveal-up">
           <span class="event-kicker">Dónde</span>
           <p class="event-highlight">Memima Play Café</p>
           <p class="event-sub">Equipetrol, Calle Tucumán #11</p>
         </div>
 
+        <!-- 6. Botón Cómo llegar con ícono y pulso sutil -->
         <a
           href="https://maps.app.goo.gl/53ENjyG4qgTZaqiX9"
           onclick="if(/Android/i.test(navigator.userAgent)){window.location.href='geo:0,0?q=Memima+Play+Cafe+Equipetrol+Calle+Tucuman+11+Santa+Cruz';return false;}"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-secondary">
-          Cómo llegar
+          class="btn btn-secondary btn-pulse-subtle reveal-up">
+          <svg class="btn-icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Cómo llegar</span>
         </a>
       </div>
     </section>
