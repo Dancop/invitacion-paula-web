@@ -14,6 +14,14 @@ function initAudioControl() {
     );
   };
 
+  // Función global para iniciar la música al tocar "Abrir invitación"
+  window.startInviteMusic = () => {
+    if (!bgMusic.paused) return;
+    bgMusic.play()
+      .then(() => setPlayingState(true))
+      .catch(() => setPlayingState(false));
+  };
+
   toggleBtn.addEventListener('click', () => {
     if (bgMusic.paused) {
       bgMusic.play()

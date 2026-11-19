@@ -136,6 +136,14 @@ body.is-loading {
   color: var(--rose-watercolor);
 }
 
+.preloader-enter-btn {
+  margin-top: 0.35rem;
+  max-width: 230px;
+  padding: 0.78rem 1.3rem;
+  font-size: 0.94rem;
+  animation: softPulse 2.4s ease-in-out infinite;
+}
+
 /* =========================================
    ESCENAS Y CONTENEDORES
    ========================================= */
@@ -205,7 +213,9 @@ body.is-loading {
   gap: 0.75rem;
 }
 
-/* Portada limpia sin saturar arriba */
+/* =========================================
+   ESCENA 1: PORTADA CON TÍTULOS ILUSTRADOS
+   ========================================= */
 .hero-layout {
   height: 100svh;
   justify-content: space-between;
@@ -261,7 +271,9 @@ body.is-loading {
   font-weight: 700;
 }
 
-/* Títulos caligráficos con espacio inferior suficiente para j y g */
+/* =========================================
+   ESCENAS 2 A 4: TIPOGRAFÍA FLOTANTE LIBRE
+   ========================================= */
 .watercolor-title-md {
   font-family: 'Dancing Script', cursive;
   font-weight: 700;
@@ -368,14 +380,24 @@ body.is-loading {
   color: var(--lilac-dark);
 }
 
-/* Escena 5: Fondo acuarela pastel + encuadre completo de Paula */
+/* =========================================
+   ESCENA 5: CIERRE, RETRATO Y FIRMA D4P-TECH
+   ========================================= */
 .scene-closing {
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 2.5rem;
+  padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
   background-color: var(--bg-cream);
   background-image:
     radial-gradient(circle at 20% 20%, rgba(247, 214, 224, 0.72) 0%, transparent 52%),
     radial-gradient(circle at 82% 28%, rgba(229, 217, 242, 0.78) 0%, transparent 55%),
     radial-gradient(circle at 50% 85%, rgba(205, 224, 201, 0.55) 0%, transparent 58%),
     radial-gradient(circle at 18% 75%, rgba(253, 240, 194, 0.65) 0%, transparent 50%);
+}
+
+.scene-closing .closing-content {
+  margin: auto 0;
 }
 
 .floral-medallion {
@@ -396,52 +418,6 @@ body.is-loading {
   width: 82%;
   height: auto;
   display: block;
-}
-
-/* Botones */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 290px;
-  margin-top: 0.4rem;
-  padding: 0.85rem 1.4rem;
-  border-radius: 999px;
-  font-family: 'Mali', cursive;
-  font-weight: 700;
-  font-size: 0.96rem;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #d86492, #8e6bbf);
-  color: #ffffff;
-  box-shadow: 0 8px 20px rgba(109, 81, 142, 0.28);
-}
-
-.btn-secondary {
-  background: linear-gradient(135deg, #cde0c9, #b7d3b2);
-  color: #3a4f36;
-  box-shadow: 0 6px 16px rgba(132, 165, 126, 0.24);
-}
-
-/* Distribución vertical de la Escena 5 para alojar la firma al pie */
-.scene-closing {
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 2.5rem;
-  padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
-}
-
-.scene-closing .closing-content {
-  margin: auto 0;
 }
 
 /* Firma sutil sin caja */
@@ -502,6 +478,43 @@ body.is-loading {
 }
 
 /* =========================================
+   BOTONES DE ACCIÓN
+   ========================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 290px;
+  margin-top: 0.4rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: 'Mali', cursive;
+  font-weight: 700;
+  font-size: 0.96rem;
+  text-decoration: none;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d86492, #8e6bbf);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(109, 81, 142, 0.28);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #cde0c9, #b7d3b2);
+  color: #3a4f36;
+  box-shadow: 0 6px 16px rgba(132, 165, 126, 0.24);
+}
+
+/* =========================================
    CONTROL MUSICAL KAWAII (DISCO + BURBUJAS)
    ========================================= */
 .audio-disc-btn {
@@ -527,7 +540,6 @@ body.is-loading {
   transform: scale(0.92);
 }
 
-/* Disco pastel lavanda y rosa acuarela */
 .vinyl-disc {
   position: relative;
   width: 46px;
@@ -567,7 +579,6 @@ body.is-loading {
   animation-play-state: running;
 }
 
-/* Etiqueta central blanca con ícono de pausa o nota musical */
 .disc-center {
   position: absolute;
   width: 21px;
@@ -588,21 +599,24 @@ body.is-loading {
   height: 11px;
 }
 
-/* En pausa muestra el símbolo de pausa; al reproducir muestra la nota */
-.audio-disc-btn .icon-note {
-  display: none;
-}
-.audio-disc-btn .icon-pause {
+/* En pausa o inicial muestra Play (▶); al reproducir muestra Pausa (❚❚) */
+.audio-disc-btn .icon-play {
   display: block;
+  color: var(--rose-watercolor);
+  margin-left: 1.5px;
+}
+
+.audio-disc-btn .icon-pause {
+  display: none;
   color: var(--lilac-dark);
 }
 
-.audio-disc-btn.is-playing .icon-pause {
+.audio-disc-btn.is-playing .icon-play {
   display: none;
 }
-.audio-disc-btn.is-playing .icon-note {
+
+.audio-disc-btn.is-playing .icon-pause {
   display: block;
-  color: var(--rose-watercolor);
 }
 
 /* Ondas musicales suaves hacia la izquierda */

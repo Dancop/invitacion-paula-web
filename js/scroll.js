@@ -23,16 +23,32 @@ function initScrollExperience() {
 
   let preloaderClosed = false;
 
-  const closePreloader = () => {
+const closePreloader = () => {
     if (preloaderClosed) return;
     preloaderClosed = true;
     if (barFill) barFill.style.width = '100%';
     if (percentText) percentText.textContent = '100%';
-    document.body.classList.remove('is-loading');
-    if (preloader) {
-      setTimeout(() => {
+
+    const enterBtn = document.getElementById('enter-invite-btn');
+    const track = document.getElementById('preloader-track');
+    const titleEl = preloader ? preloader.querySelector('.preloader-title') : null;
+
+    if (enterBtn && preloader) {
+      if (track) track.style.display = 'none';
+      if (percentText) percentText.style.display = 'none';
+      if (titleEl) titleEl.textContent = '¡Todo listo para celebrar!';
+      enterBtn.style.display = 'inline-flex';
+
+      enterBtn.addEventListener('click', () => {
+        document.body.classList.remove('is-loading');
         preloader.classList.add('is-hidden');
-      }, 300);
+        if (typeof window.startInviteMusic === 'function') {
+          window.startInviteMusic();
+        }
+      }, { once: true });
+    } else {
+      document.body.classList.remove('is-loading');
+      if (preloader) preloader.classList.add('is-hidden');
     }
   };
 
